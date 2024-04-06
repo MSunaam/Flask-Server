@@ -2,7 +2,7 @@ import os
 from flask import Flask, flash, request
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
