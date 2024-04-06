@@ -1,5 +1,7 @@
 import os
 from flask import Flask,  request
+import json
+import git
 
 from CropDiseaseClasssifier import upload_image, webhook
 
@@ -23,4 +25,17 @@ def upload_img():
 
 @app.route('/update_server', methods=['POST'])
 def update_server():
-    return webhook.webhook(request,app.config)
+    # return webhook.webhook(request,app.config)
+    if request.method == 'POST':
+            event = request.headers.get('X-GitHub-Event')
+            if event == "ping":
+                return json.dumps({'msg': 'Hi!'})
+            if event != "push":
+                return json.dumps({'msg': "Wrong event type"})
+
+            repo = git.Repo(app.config['REPO_PATH']) # type: ignore
+            origin = repo.remotes.origin
+            origin.pull()
+            return 'Updated PythonAnywhere successfully', 200
+    else:
+        return 'Wrong event type', 400
