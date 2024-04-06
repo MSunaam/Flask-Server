@@ -3,7 +3,7 @@ from flask import Flask,  request
 import json
 import git
 
-from CropDiseaseClasssifier import upload_image, webhook
+# from CropDiseaseClasssifier import upload_image, webhook
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropDiseaseClasssifier/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -19,9 +19,9 @@ app.config['REPO_PATH'] = REPO_PATH
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route("/upload-image", methods=["POST"])
-def upload_img():
-    return upload_image.upload_image(request, ALLOWED_EXTENSIONS, app.config)
+# @app.route("/upload-image", methods=["POST"])
+# def upload_img():
+#     return upload_image.upload_image(request, ALLOWED_EXTENSIONS, app.config)
 
 @app.route('/update_server', methods=['POST'])
 def update_server():
