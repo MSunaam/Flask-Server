@@ -1,7 +1,7 @@
 import os
 from flask import Flask,  request
 
-from CropDiseaseClasssifier.upload_image import upload_image
+from CropDiseaseClasssifier import upload_image, webhook
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'CropDiseaseClasssifier/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -17,4 +17,8 @@ def hello_world():
 
 @app.route("/upload-image", methods=["POST"])
 def upload_img():
-    return upload_image(request, ALLOWED_EXTENSIONS, app.config)
+    return upload_image.upload_image(request, ALLOWED_EXTENSIONS, app.config)
+
+@app.route('/update_server', methods=['POST'])
+def update_server():
+    return webhook.webhook(request)
